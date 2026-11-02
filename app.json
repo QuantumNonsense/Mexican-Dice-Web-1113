@@ -11,7 +11,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.infernodice.infernodice",
-      "buildNumber": "160",
+      "buildNumber": "161",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "CFBundleDisplayName": "InfernoDice"
