@@ -14,7 +14,7 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PostgrestError, User } from '@supabase/supabase-js';
-import { supabase } from './supabase';
+import { isSupabaseConfigured, supabase } from './supabase';
 import { getOrCreateUserDisplayName, setUserDisplayName } from '../identity/userDisplayName';
 import { generateRandomColorAnimalName, normalizeColorAnimalName } from './colorAnimalName';
 
@@ -100,6 +100,13 @@ export async function signInOrCreateUser(): Promise<User> {
 
   signInInFlight = (async () => {
     try {
+      if (!isSupabaseConfigured) {
+        // Fail with the real reason instead of a misleading network error against the placeholder host.
+        throw new Error(
+          'Supabase credentials are missing from this build (EXPO_PUBLIC_SUPABASE_URL / EXPO_PUBLIC_SUPABASE_ANON_KEY).'
+        );
+      }
+
       const {
         data: { session },
       } = await supabase.auth.getSession();

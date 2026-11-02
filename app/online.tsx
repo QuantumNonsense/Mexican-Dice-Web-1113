@@ -128,7 +128,8 @@ export default function OnlineLobbyScreen() {
       }
     } catch (err) {
       console.error('[OnlineLobby] Failed to load user', err);
-      Alert.alert('Unable to load account', 'Please try again.');
+      const detail = err instanceof Error && err.message ? err.message : 'Please try again.';
+      Alert.alert('Unable to load account', detail);
     } finally {
       if (isMounted) {
         setLoadingUser(false);
